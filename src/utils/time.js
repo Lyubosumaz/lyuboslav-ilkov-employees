@@ -1,5 +1,9 @@
+export const getNewUTCDate = (inputDate) => {
+    return inputDate ? new Date(inputDate) : new Date();
+}
+
 const getNumberOfDays = (inputDate) => {
-    const date = new Date(inputDate);
+    const date = getNewUTCDate(inputDate);
     const oneDay = 1000 * 60 * 60 * 24;
 
     return Math.round(date.getTime() / oneDay);

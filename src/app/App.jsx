@@ -5,21 +5,21 @@ import './App.css';
 
 const App = () => {
     const [employeesDataArr, setEmployeesData] = useState([]);
-    const dataArrStatus = Array.isArray(employeesDataArr) && employeesDataArr.length;
     const [resetBtn, setResetBtn] = useState(0);
+    const dataArrStatus = Array.isArray(employeesDataArr) && employeesDataArr.length;
 
-    const handleCallback = (fileData) => {
+    const callbackFileData = (fileData) => {
         setEmployeesData(fileData);
     };
 
-    const handleResetBtn = () => {
+    const callbackForResetBtn = () => {
+        setResetBtn(0);
+    };
+
+    const onClickResetBtn = () => {
         setEmployeesData([]);
         setResetBtn(1);
     }
-
-    const handleCallbackResetBtn = () => {
-        setResetBtn(0);
-    };
 
     return (
         <div className="app">
@@ -30,9 +30,9 @@ const App = () => {
 
             <main className="app-main">
                 <section className="app-controls-wrapper">
-                    <SelectFile callbackFileData={handleCallback} resetBtnStatus={resetBtn} callbackResetBtnStatus={handleCallbackResetBtn} />
+                    <SelectFile callbackFileData={callbackFileData} resetBtnStatus={resetBtn} callbackResetBtnStatus={callbackForResetBtn} />
 
-                    {dataArrStatus ? <button className="app-remove-btn" onClick={() => handleResetBtn()}>Reset</button> : null}
+                    {dataArrStatus ? <button className="app-remove-btn" onClick={() => onClickResetBtn()}>Reset</button> : null}
                 </section>
 
                 {dataArrStatus ? <Datagrid employeesData={employeesDataArr} /> : null}

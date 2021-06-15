@@ -1,5 +1,5 @@
 import { createRef, useEffect } from 'react';
-import { formatDatagridToArr, formatSelectedFileToObj } from "../../utils/format";
+import { formatDatagridToArr, formatSelectedFileToArr } from "../../utils/format";
 import "./SelectFile.css";
 
 const SelectFile = ({ callbackFileData, resetBtnStatus, callbackResetBtnStatus }) => {
@@ -18,7 +18,7 @@ const SelectFile = ({ callbackFileData, resetBtnStatus, callbackResetBtnStatus }
         const reader = new FileReader();
 
         reader.onload = () => {
-            const initialDataOnj = formatSelectedFileToObj(reader.result);
+            const initialDataOnj = formatSelectedFileToArr(reader.result);
             const datagridObj = formatDatagridToArr(initialDataOnj);
 
             callbackFileData(datagridObj);

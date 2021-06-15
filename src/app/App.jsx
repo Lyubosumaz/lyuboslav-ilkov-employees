@@ -30,7 +30,7 @@ const App = () => {
 
             <main className="app-main">
                 <section className="app-controls-wrapper">
-                    <SelectFile callbackFileData={handleCallback} myTest={resetBtn} testMY={handleCallbackResetBtn} />
+                    <SelectFile callbackFileData={handleCallback} resetBtnStatus={resetBtn} callbackResetBtnStatus={handleCallbackResetBtn} />
 
                     {dataArrStatus ? <button className="app-remove-btn" onClick={() => handleResetBtn()}>Reset</button> : null}
                 </section>
@@ -40,7 +40,7 @@ const App = () => {
 
             <footer className="app-footer">
                 <p>GitHub repository:</p>
-                <a href="https://github.com/Lyubosumaz" target="_blank">lyuboslav-ilkov-employees</a>
+                <a href="https://github.com/Lyubosumaz/lyuboslav-ilkov-employees" target="_blank" rel="noreferrer">lyuboslav-ilkov-employees</a>
             </footer>
         </div>
     );

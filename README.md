@@ -13,3 +13,5 @@ Run development mode
 Open browser
 
         http://localhost:3000
+
+Folder contains example input in file `mock_data.txt`

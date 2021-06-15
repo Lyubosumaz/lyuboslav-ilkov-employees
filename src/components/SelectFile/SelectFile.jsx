@@ -18,11 +18,11 @@ const SelectFile = ({ callbackFileData, resetBtnStatus, callbackResetBtnStatus }
         const reader = new FileReader();
 
         reader.onload = () => {
-            const initialDataOnj = formatSelectedFileToArr(reader.result);
-            const datagridObj = formatDatagridToArr(initialDataOnj);
+            const initialDataArr = formatSelectedFileToArr(reader.result);
+            const datagridArr = formatDatagridToArr(initialDataArr);
 
-            callbackFileData(datagridObj);
-            console.table(datagridObj);
+            callbackFileData(datagridArr);
+            console.table(datagridArr);
         }
 
         if (!file) return;

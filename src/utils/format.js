@@ -20,7 +20,7 @@ export const formatSelectedFileToArr = (selectedFile) => {
 };
 
 export const formatDatagridToArr = (projects) => {
-    let datagridArr = {};
+    let datagridObj = {};
 
     for (const currentProject of projects) {
         const { employeeID, projectID, dateFrom, dateTo } = currentProject;
@@ -60,10 +60,10 @@ export const formatDatagridToArr = (projects) => {
             }
         }
 
-        if (Object.keys(projectBest).length && !datagridArr[projectBest.projectID]) {
-            datagridArr[projectBest.projectID] = projectBest;
+        if (Object.keys(projectBest).length && !datagridObj[projectBest.projectID]) {
+            datagridObj[projectBest.projectID] = projectBest;
         }
     }
 
-    return Object.values(datagridArr);
+    return Object.values(datagridObj);
 };

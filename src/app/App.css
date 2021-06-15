@@ -1,0 +1,47 @@
+.app {
+    width: calc(1rem * 64);
+    margin: 0 auto;
+    min-height: 100vh;
+}
+
+.app-header {
+    margin-bottom: 3rem;
+}
+
+.app-main {
+    margin-bottom: 3rem;
+}
+
+.app-main .app-controls-wrapper {
+    margin-bottom: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.app-controls-wrapper .app-remove-btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    color: #ffffff;
+    background: #009879;
+    border: 0.2em solid transparent;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.app-controls-wrapper .app-remove-btn:active {
+    background: -webkit-linear-gradient(top, #009879, #00b98a);
+}
+
+.app-footer {
+    display: flex;
+}
+
+.app-footer a {
+    margin-left: 0.5rem;
+    text-decoration: none;
+    color: #009879;
+}
+
+.app-footer a:hover {
+    color: #00b98a;
+}

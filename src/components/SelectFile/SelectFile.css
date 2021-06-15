@@ -1,0 +1,21 @@
+.custom-file-input {
+    width: calc(1rem * 32);
+    font-size: 1.2rem;
+    border: 0.05em solid #009879;
+    cursor: pointer;
+}
+
+.custom-file-input::-webkit-file-upload-button {
+    padding: 0.75rem 1.5rem;
+    display: inline-block;
+    background: #009879;
+    color: #ffffff;
+    border: 0.2em solid transparent;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.custom-file-input::-webkit-file-upload-button:active {
+    background: -webkit-linear-gradient(top, #009879, #00b98a);
+}

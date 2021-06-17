@@ -32,6 +32,11 @@
     background: -webkit-linear-gradient(top, #009879, #00b98a);
 }
 
+.app-main .app-info {
+    margin-left: 1rem;
+    color: #009879;
+}
+
 .app-footer {
     display: flex;
 }

@@ -36,6 +36,11 @@ const App = () => {
                 </section>
 
                 {dataArrStatus ? <Datagrid employeesData={employeesDataArr} /> : null}
+
+                {dataArrStatus && employeesDataArr.length > 1
+                    ? <p className="app-info">*There are two or more different projects with equal "Days worked"</p>
+                    : null
+                }
             </main>
 
             <footer className="app-footer">

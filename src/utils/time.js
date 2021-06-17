@@ -1,34 +1,32 @@
-export const getNewUTCDate = (inputDate) => {
-    return inputDate ? new Date(inputDate) : new Date();
+import moment from 'moment';
+
+export const getNewUTCDate = (dInput) => {
+    return dInput ? moment(dInput) : moment();
 }
 
-const getNumberOfDays = (inputDate) => {
-    const date = getNewUTCDate(inputDate);
-    const oneDay = 1000 * 60 * 60 * 24;
-
-    return Math.round(date.getTime() / oneDay);
+export const formatToYearMonthDay = (dTime) => {
+    return moment(dTime).format("YYYY-MM-DD");
 };
 
-export const getDifferenceOfDays = (start, end) => {
-    const dateStart = getNumberOfDays(start);
-    const dateEnd = getNumberOfDays(end);
+export const getDifferenceInDays = (dStart, dEnd) => {
+    const dateStart = moment(dStart);
+    const dateEnd = moment(dEnd);
 
-    return dateEnd - dateStart;
+    return dateEnd.diff(dateStart, 'days');
 };
 
 export const getStartEndTogetherDates = (firstTimeStart, firstTimeEnd, secondTimeStart, secondTimeEnd) => {
-    let startTogether;
-    let endTogether;
+    let startTogetherDate;
+    let endTogetherDate;
 
-    if (firstTimeStart >= secondTimeStart && firstTimeStart <= secondTimeEnd) startTogether = firstTimeStart;
-    if (firstTimeEnd >= secondTimeStart && firstTimeEnd <= secondTimeEnd) startTogether = firstTimeEnd;
+    if (firstTimeStart >= secondTimeStart && firstTimeStart <= secondTimeEnd) startTogetherDate = firstTimeStart;
+    else if (firstTimeEnd >= secondTimeStart && firstTimeEnd <= secondTimeEnd) startTogetherDate = firstTimeEnd;
 
-    if (secondTimeStart >= firstTimeStart && secondTimeStart <= firstTimeEnd) endTogether = secondTimeStart;
-    if (secondTimeEnd >= firstTimeStart && secondTimeEnd <= firstTimeEnd) endTogether = secondTimeEnd;
+    if (secondTimeEnd >= firstTimeStart && secondTimeEnd <= firstTimeEnd) endTogetherDate = secondTimeEnd;
+    else if (secondTimeStart >= firstTimeStart && secondTimeStart <= firstTimeEnd) endTogetherDate = secondTimeStart;
 
-
-    if (startTogether && endTogether) {
-        return [Math.min(startTogether, endTogether), Math.max(startTogether, endTogether)];
+    if (startTogetherDate && endTogetherDate) {
+        return [Math.min(startTogetherDate, endTogetherDate), Math.max(startTogetherDate, endTogetherDate)];
     }
 
     return [];

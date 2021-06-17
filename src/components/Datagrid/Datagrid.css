@@ -14,6 +14,7 @@
 .styled-table th,
 .styled-table td {
     padding: 1em 2em;
+    text-align: center;
 }
 
 .styled-table tbody tr {

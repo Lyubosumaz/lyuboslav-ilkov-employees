@@ -1,8 +1,4 @@
-import { getDifferenceOfDays, getNewUTCDate, getStartEndTogetherDates } from "./time";
-
-const formatToYearMonthDay = (dTime) => {
-    return `${dTime.getUTCFullYear()}-${("0" + (dTime.getUTCMonth() + 1)).slice(-2)}-${("0" + dTime.getUTCDate()).slice(-2)}`;
-};
+import { formatToYearMonthDay, getDifferenceInDays, getNewUTCDate, getStartEndTogetherDates } from "./time";
 
 export const formatSelectedFileToArr = (selectedFile) => {
     return selectedFile
@@ -25,7 +21,6 @@ const getPairsDaysPerProject = (projects) => {
 
     for (const currentProject of projects) {
         const { employeeID, projectID, dateFrom, dateTo } = currentProject;
-        let projectBest = {};
 
         for (const compereProject of projects) {
             if (employeeID === compereProject.employeeID) continue;
@@ -38,31 +33,27 @@ const getPairsDaysPerProject = (projects) => {
             } = compereProject;
 
             if (projectID === compereProjectID) {
-                const togetherDatesArr = getStartEndTogetherDates(dateFrom, dateTo, compereDateFrom, compereDateTo);
+                const [start, end] = getStartEndTogetherDates(dateFrom, dateTo, compereDateFrom, compereDateTo);
+                if (!start || !end) continue;
 
-                if (Array.isArray(togetherDatesArr) && togetherDatesArr.length) {
-                    const [start, end] = togetherDatesArr;
-                    const togetherDays = getDifferenceOfDays(start, end);
-                    if (!togetherDays) return;
+                const togetherDays = getDifferenceInDays(start, end);
+                if (!togetherDays) continue;
 
-                    if (projectBest.togetherDays >= togetherDays) {
-                        projectBest = { ...projectBest };
-                    } else {
-                        projectBest = {
-                            employeeOne: employeeID,
-                            employeeTwo: compereEmployeeID,
-                            projectID,
-                            togetherDays,
-                            firstDayTogether: formatToYearMonthDay(getNewUTCDate(start)),
-                            lastDayTogether: formatToYearMonthDay(getNewUTCDate(end)),
-                        };
-                    }
+                const datagridRecord = {
+                    employeeOne: employeeID,
+                    employeeTwo: compereEmployeeID,
+                    projectID,
+                    togetherDays,
+                    firstDayTogether: formatToYearMonthDay(getNewUTCDate(start)),
+                    lastDayTogether: formatToYearMonthDay(getNewUTCDate(end)),
+                };
+
+                if (!datagridObj[projectID]) {
+                    datagridObj[projectID] = datagridRecord;
+                } else if (datagridObj[projectID].togetherDays < togetherDays) {
+                    datagridObj[projectID] = datagridRecord;
                 }
             }
-        }
-
-        if (Object.keys(projectBest).length && !datagridObj[projectBest.projectID]) {
-            datagridObj[projectBest.projectID] = projectBest;
         }
     }
 
@@ -81,9 +72,9 @@ const getLongestTimeTogether = (selectedFileArr) => {
     return longestTime;
 }
 
-export const formatDatagridToArr = (selectedFileRecords) => {
-    const everyPairWorkingDays = getPairsDaysPerProject(selectedFileRecords);
-    const longestTime = getLongestTimeTogether(everyPairWorkingDays);
+export const formatDatagridToArr = (selectedFileArr) => {
+    const everyPairWorkDays = getPairsDaysPerProject(selectedFileArr);
+    const longestTime = getLongestTimeTogether(everyPairWorkDays);
 
-    return everyPairWorkingDays.filter((record) => record.togetherDays === longestTime);
+    return everyPairWorkDays.filter((record) => record.togetherDays === longestTime);
 }

@@ -14,4 +14,4 @@ Open browser
 ```
 http://localhost:3000
 ```
-Folder contains example input in file `mock_data.txt`
+Folder `mock-testing-data` contains several test-files with extensions `.tex`, `.docx`, `.odt`, `.txt`, `.pdf` and `.wpd`

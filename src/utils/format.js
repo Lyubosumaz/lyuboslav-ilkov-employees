@@ -8,6 +8,7 @@ export const formatSelectedFileToArr = (selectedFile) => {
     return selectedFile
         .trim()
         .split('\n')
+        .filter((employeeRecord) => employeeRecord)
         .map((employeeRecord) => {
             let [employeeID, projectID, dateFrom, dateTo] = employeeRecord.trim().split(", ");
 
@@ -19,7 +20,7 @@ export const formatSelectedFileToArr = (selectedFile) => {
         });
 };
 
-export const formatDatagridToArr = (projects) => {
+const getPairsDaysPerProject = (projects) => {
     let datagridObj = {};
 
     for (const currentProject of projects) {
@@ -67,3 +68,22 @@ export const formatDatagridToArr = (projects) => {
 
     return Object.values(datagridObj);
 };
+
+const getLongestTimeTogether = (selectedFileArr) => {
+    let longestTime = 0;
+
+    for (const record of selectedFileArr) {
+        if (longestTime < record.togetherDays) {
+            longestTime = record.togetherDays;
+        }
+    }
+
+    return longestTime;
+}
+
+export const formatDatagridToArr = (selectedFileRecords) => {
+    const everyPairWorkingDays = getPairsDaysPerProject(selectedFileRecords);
+    const longestTime = getLongestTimeTogether(everyPairWorkingDays);
+
+    return everyPairWorkingDays.filter((record) => record.togetherDays === longestTime);
+}

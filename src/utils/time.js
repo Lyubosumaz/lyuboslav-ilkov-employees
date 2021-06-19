@@ -2,10 +2,10 @@ import moment from 'moment';
 
 export const getNewUTCDate = (dInput) => {
     return dInput ? moment(dInput) : moment();
-}
+};
 
 export const formatToYearMonthDay = (dTime) => {
-    return moment(dTime).format("YYYY-MM-DD");
+    return moment(dTime).format('YYYY-MM-DD');
 };
 
 export const getDifferenceInDays = (dStart, dEnd) => {
@@ -15,19 +15,19 @@ export const getDifferenceInDays = (dStart, dEnd) => {
     return dateEnd.diff(dateStart, 'days');
 };
 
-export const getStartEndTogetherDates = (firstTimeStart, firstTimeEnd, secondTimeStart, secondTimeEnd) => {
-    let startTogetherDate;
-    let endTogetherDate;
+export const getStartEndOverlapDates = (abStart, abEnd, cdStart, cdEnd) => {
+    let overlapStart;
+    let overlapEnd;
 
-    if (firstTimeStart >= secondTimeStart && firstTimeStart <= secondTimeEnd) startTogetherDate = firstTimeStart;
-    else if (firstTimeEnd >= secondTimeStart && firstTimeEnd <= secondTimeEnd) startTogetherDate = firstTimeEnd;
+    // lines are not overlapping
+    if ((abStart < cdStart && abEnd < cdEnd && abEnd < cdStart) || (cdStart < abStart && cdEnd < abEnd && cdEnd < abStart)) return [];
 
-    if (secondTimeEnd >= firstTimeStart && secondTimeEnd <= firstTimeEnd) endTogetherDate = secondTimeEnd;
-    else if (secondTimeStart >= firstTimeStart && secondTimeStart <= firstTimeEnd) endTogetherDate = secondTimeStart;
+    // lines are equal to each other
+    if (abStart === cdStart && abEnd === cdEnd) return [abStart, abEnd];
 
-    if (startTogetherDate && endTogetherDate) {
-        return [Math.min(startTogetherDate, endTogetherDate), Math.max(startTogetherDate, endTogetherDate)];
-    }
+    overlapStart = abStart >= cdStart ? abStart : cdStart;
+    overlapEnd = abEnd <= cdEnd ? abEnd : cdEnd;
 
+    if (overlapStart && overlapEnd) return [overlapStart, overlapEnd];
     return [];
 };

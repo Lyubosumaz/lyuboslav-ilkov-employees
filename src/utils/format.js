@@ -1,4 +1,4 @@
-import { formatToYearMonthDay, getDifferenceInDays, getNewUTCDate, getStartEndTogetherDates } from "./time";
+import { formatToYearMonthDay, getDifferenceInDays, getNewUTCDate, getStartEndOverlapDates } from './time';
 
 export const formatSelectedFileToArr = (selectedFile) => {
     return selectedFile
@@ -6,9 +6,9 @@ export const formatSelectedFileToArr = (selectedFile) => {
         .split('\n')
         .filter((employeeRecord) => employeeRecord)
         .map((employeeRecord) => {
-            let [employeeID, projectID, dateFrom, dateTo] = employeeRecord.trim().split(", ");
+            let [employeeID, projectID, dateFrom, dateTo] = employeeRecord.trim().split(', ');
 
-            if (dateTo === "NULL") dateTo = formatToYearMonthDay(getNewUTCDate());
+            if (dateTo === 'NULL') dateTo = formatToYearMonthDay(getNewUTCDate());
             dateFrom = getNewUTCDate(dateFrom);
             dateTo = getNewUTCDate(dateTo);
 
@@ -33,7 +33,7 @@ const getPairsDaysPerProject = (projects) => {
             } = compereProject;
 
             if (projectID === compereProjectID) {
-                const [start, end] = getStartEndTogetherDates(dateFrom, dateTo, compereDateFrom, compereDateTo);
+                const [start, end] = getStartEndOverlapDates(dateFrom, dateTo, compereDateFrom, compereDateTo);
                 if (!start || !end) continue;
 
                 const togetherDays = getDifferenceInDays(start, end);
@@ -70,11 +70,11 @@ const getLongestTimeTogether = (selectedFileArr) => {
     }
 
     return longestTime;
-}
+};
 
 export const formatDatagridToArr = (selectedFileArr) => {
     const everyPairWorkDays = getPairsDaysPerProject(selectedFileArr);
     const longestTime = getLongestTimeTogether(everyPairWorkDays);
 
     return everyPairWorkDays.filter((record) => record.togetherDays === longestTime);
-}
+};
